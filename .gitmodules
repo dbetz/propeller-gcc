@@ -1,0 +1,12 @@
+[submodule "binutils"]
+	path = binutils
+	url = https://github.com/totalspectrum/binutils-propeller
+[submodule "lib"]
+	path = lib
+	url = https://github.com/totalspectrum/proplib
+[submodule "gcc"]
+	path = gcc
+	url = https://github.com/totalspectrum/gcc-propeller
+[submodule "loader"]
+	path = loader
+	url = https://github.com/dbetz/propeller-load
