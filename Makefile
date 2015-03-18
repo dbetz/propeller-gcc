@@ -112,8 +112,8 @@ CONFIG_OPTIONS=--with-pkgversion=$(PROPGCC_VERSION) --with-bugurl=$(BUGURL) $(CF
 
 .PHONY:	all
 
-#all:	binutils gcc lib-cog libgcc lib install-spin-compiler lib-tiny spin2cpp loader gdb gdbstub spinsim libstdc++
-all:	binutils gcc lib-cog libgcc lib install-spin-compiler lib-tiny loader
+#all:	binutils gcc lib-cog libgcc lib lib-tiny openspin spin2cpp loader gdb gdbstub spinsim libstdc++
+all:	binutils gcc lib-cog libgcc lib lib-tiny openspin spin2cpp loader
 	@$(ECHO) Build complete.
 
 .NOTPARALLEL:
@@ -136,7 +136,7 @@ help:
 	@$(ECHO) '  lib - build the library'	
 	@$(ECHO) '  lib-cog - build the cog library'	
 	@$(ECHO) '  lib-tiny - build libtiny'	
-	@$(ECHO) '  install-spin-compiler - install OpenSpin'	
+	@$(ECHO) '  openspin - build openspin
 	@$(ECHO) '  spin2cpp - build spin2cpp'	
 	@$(ECHO) '  spinsim - build spinsim'	
 	@$(ECHO) '  loader - build the loader'	
@@ -149,6 +149,7 @@ help:
 	@$(ECHO) '  clean-gdb - prepare for a fresh rebuild of gdb'	
 	@$(ECHO) '  clean-gdbstub - prepare for a fresh rebuild of gdbstub'	
 	@$(ECHO) '  clean-lib - prepare for a fresh rebuild of lib, lib-cog, lib-tiny'	
+	@$(ECHO) '  clean-openspin - prepare for a fresh rebuild of openspin
 	@$(ECHO) '  clean-spin2cpp - prepare for a fresh rebuild of spin2cpp'	
 	@$(ECHO) '  clean-spinsim prepare for a fresh rebuild of spinsim'	
 	@$(ECHO)
@@ -312,14 +313,21 @@ $(BUILD)/lib/lib-tiny-built:	$(BUILD)/lib/lib-created
 	@$(MAKE) -C lib install-tiny
 	@$(TOUCH) $@
 
-#################
-# SPIN COMPILER #
-#################
+############
+# OPENSPIN #
+############
 
-.PHONY:	install-spin-compiler
-install-spin-compiler:	$(PREFIX)/bin/bin-created
-	@$(CP) -f release/$(SRC_SPINCMP) $(PREFIX)/bin/$(SPINCMP)
-	@$(CHMOD) a+x $(PREFIX)/bin/$(SPINCMP)
+.PHONY:	openspin
+openspin:
+	@$(ECHO) Building openspin
+	@$(MAKE) -C openspin CC=$(CROSSCC)
+	@$(ECHO) Installing openspin
+	@$(CP) openspin/openspin$(EXT) $(PREFIX)/bin
+
+.PHONY:	clean-openspin
+clean-openspin:
+	@$(RM) -rf $(BUILD)/openspin
+	@$(MAKE) -C openspin clean
 
 ############
 # SPIN2CPP #
@@ -330,7 +338,7 @@ spin2cpp:
 	@$(ECHO) Building spin2cpp
 	@$(MAKE) -C spin2cpp CC=$(CROSSCC) TARGET=$(PREFIX) BUILDROOT=$(BUILD)/spin2cpp
 	@$(ECHO) Installing spin2cpp
-	@$(MAKE) -C spin2cpp TARGET=$(PREFIX) BUILDROOT=$(BUILD)/spin2cpp install
+	@$(CP) spin2cpp/spin2cpp$(EXT) $(PREFIX)/bin
 
 .PHONY:	clean-spin2cpp
 clean-spin2cpp:

@@ -10,3 +10,9 @@
 [submodule "loader"]
 	path = loader
 	url = https://github.com/dbetz/propeller-load
+[submodule "openspin"]
+	path = openspin
+	url = https://github.com/parallaxinc/OpenSpin.git
+[submodule "spin2cpp"]
+	path = spin2cpp
+	url = https://github.com/totalspectrum/spin2cpp.git
