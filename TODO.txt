@@ -1,0 +1,4 @@
+Add ncurses once we figure out why it is needed for the Raspberry Pi
+build but not for any other platform.
+
+URL: git://ncurses.scripts.mit.edu/ncurses.git
