@@ -136,7 +136,7 @@ help:
 	@$(ECHO) '  lib - build the library'	
 	@$(ECHO) '  lib-cog - build the cog library'	
 	@$(ECHO) '  lib-tiny - build libtiny'	
-	@$(ECHO) '  openspin - build openspin
+	@$(ECHO) '  openspin - build openspin'
 	@$(ECHO) '  spin2cpp - build spin2cpp'	
 	@$(ECHO) '  spinsim - build spinsim'	
 	@$(ECHO) '  loader - build the loader'	
@@ -149,7 +149,7 @@ help:
 	@$(ECHO) '  clean-gdb - prepare for a fresh rebuild of gdb'	
 	@$(ECHO) '  clean-gdbstub - prepare for a fresh rebuild of gdbstub'	
 	@$(ECHO) '  clean-lib - prepare for a fresh rebuild of lib, lib-cog, lib-tiny'	
-	@$(ECHO) '  clean-openspin - prepare for a fresh rebuild of openspin
+	@$(ECHO) '  clean-openspin - prepare for a fresh rebuild of openspin'
 	@$(ECHO) '  clean-spin2cpp - prepare for a fresh rebuild of spin2cpp'	
 	@$(ECHO) '  clean-spinsim prepare for a fresh rebuild of spinsim'	
 	@$(ECHO)
