@@ -15,24 +15,15 @@
 # binutils and gcc have to be built first
 #
 
-# INSTALL is the directory where "make install" will copy the results of the build
-INSTALL?=/opt/parallax
-$(warning INSTALL directory is $(INSTALL))
-
-# PREFIX is the directory where "make" will write its generated files
-PREFIX?=$(realpath ..)/build/target
-$(warning PREFIX is $(PREFIX))
-
 ROOT=$(shell pwd)
 CURSES=
 CURSES_PREFIX=$(HOME)
 ifeq ($(CROSS),)
-  BUILD=$(ROOT)/../build
   CFGCROSS=
   CROSSCC=gcc
+  BUILD?=$(realpath ..)/build
 else
-  BUILD=$(ROOT)/../build-$(CROSS)
-  PREFIX:=$(PREFIX)-$(CROSS)
+  BUILD?=$(realpath ..)/build-$(CROSS)
   ifeq ($(CROSS),win32)
     CROSS_TARGET=i586-mingw32msvc
     CFGCROSS=--host=$(CROSS_TARGET)
@@ -53,6 +44,17 @@ else
     endif
   endif
 endif
+
+# BUILD is the directory where intermediate results from the build are written
+$(warning BUILD directory is $(BUILD))
+
+# PREFIX is the directory where "make" will write its generated files
+PREFIX?=$(BUILD)/target
+$(warning PREFIX is $(PREFIX))
+
+# INSTALL is the directory where "make install" will copy the results of the build
+INSTALL?=/opt/parallax
+$(warning INSTALL directory is $(INSTALL))
 
 ECHO=echo
 RM=rm
@@ -152,7 +154,7 @@ help:
 	@$(ECHO)
 	@$(ECHO) 'Cleaning targets:'
 	@$(ECHO) '  clean - prepare for a fresh build'
-	@$(ECHO) '  clean-all - prepare for a fresh build and remove the $(PREFIX) directory'
+	@$(ECHO) '  clean-all - prepare for a fresh build and remove the' $(INSTALL) 'directory'
 	@$(ECHO) '  clean-binutils - prepare for a fresh rebuild of binutils'	
 	@$(ECHO) '  clean-gcc - prepare for a fresh rebuild of gcc, libgcc, libstdc++'	
 	@$(ECHO) '  clean-gdb - prepare for a fresh rebuild of gdb'	
@@ -412,8 +414,8 @@ clean:	clean-lib clean-loader
 
 .PHONY:	clean-all
 clean-all:	clean
-	@$(ECHO) Removing $(PREFIX)/*
-	@$(RM) -rf $(PREFIX)/*
+	@$(ECHO) Removing $(INSTALL)
+	@$(RM) -rf $(INSTALL)
 
 #####################
 # INDIVIDUAL CLEANS #
