@@ -45,7 +45,11 @@ else
   endif
 endif
 
-PREFIX?=/opt/parallax
+INSTALL?=/opt/parallax
+PREFIX?=$(realpath ..)/build/target
+
+$(warning INSTALL directory is $(INSTALL))
+$(warning PREFIX is $(PREFIX))
 
 ECHO=echo
 RM=rm
@@ -86,6 +90,7 @@ $(warning OS $(OS) detected.)
 export PREFIX
 export OS
 export SPINCMP
+export PATH:=$(PREFIX)/bin:$(PATH)
 
 #
 # note that the propgcc version string does not deal well with
@@ -139,7 +144,8 @@ help:
 	@$(ECHO) '  openspin - build openspin'
 	@$(ECHO) '  spin2cpp - build spin2cpp'	
 	@$(ECHO) '  spinsim - build spinsim'	
-	@$(ECHO) '  loader - build the loader'	
+	@$(ECHO) '  loader - build the loader'
+	@$(ECHO) '  install - install generated files to' $(INSTALL)	
 	@$(ECHO)
 	@$(ECHO) 'Cleaning targets:'
 	@$(ECHO) '  clean - prepare for a fresh build'
@@ -376,6 +382,16 @@ $(BUILD)/loader/loader-built:	$(BUILD)/loader/loader-created
 	@$(ECHO) Installing propeller-load
 	@$(MAKE) -C loader TARGET=$(PREFIX) BUILDROOT=$(BUILD)/loader TOOLCC=$(CROSSCC) install
 	@$(TOUCH) $@
+
+###########
+# INSTALL #
+###########
+
+.PHONY:	install
+install:
+	@$(ECHO) Installing to $(INSTALL)
+	@$(RM) -rf $(INSTALL)
+	@$(CP) -r $(PREFIX) $(INSTALL)
 
 #########
 # CLEAN #
