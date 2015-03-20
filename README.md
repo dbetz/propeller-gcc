@@ -14,3 +14,15 @@ have wget available on your machine.
 
     cd propeller-gcc/gcc
     ./contrib/download_prerequisites
+    
+To build propeller-gcc:
+
+    make
+    
+To install propeller-gcc into /opt/parallax:
+
+    sudo make install
+    
+To install propeller-gcc to another location:
+
+    INSTALL=/my/install/directory make install
