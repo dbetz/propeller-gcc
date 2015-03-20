@@ -32,7 +32,7 @@ ifeq ($(CROSS),)
   CROSSCC=gcc
 else
   BUILD=$(ROOT)/../build-$(CROSS)
-  PREFIX=/opt/parallax-$(CROSS)
+  PREFIX:=$(PREFIX)-$(CROSS)
   ifeq ($(CROSS),win32)
     CROSS_TARGET=i586-mingw32msvc
     CFGCROSS=--host=$(CROSS_TARGET)
