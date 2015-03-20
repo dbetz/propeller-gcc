@@ -13,7 +13,16 @@
 
 #dependencies:
 # binutils and gcc have to be built first
-# 
+#
+
+# INSTALL is the directory where "make install" will copy the results of the build
+INSTALL?=/opt/parallax
+$(warning INSTALL directory is $(INSTALL))
+
+# PREFIX is the directory where "make" will write its generated files
+PREFIX?=$(realpath ..)/build/target
+$(warning PREFIX is $(PREFIX))
+
 ROOT=$(shell pwd)
 CURSES=
 CURSES_PREFIX=$(HOME)
@@ -44,12 +53,6 @@ else
     endif
   endif
 endif
-
-INSTALL?=/opt/parallax
-PREFIX?=$(realpath ..)/build/target
-
-$(warning INSTALL directory is $(INSTALL))
-$(warning PREFIX is $(PREFIX))
 
 ECHO=echo
 RM=rm
