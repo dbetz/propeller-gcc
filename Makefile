@@ -21,9 +21,9 @@ CURSES_PREFIX=$(HOME)
 ifeq ($(CROSS),)
   CFGCROSS=
   CROSSCC=gcc
-  BUILD?=$(realpath ..)/build
+  BUILD?=$(realpath ..)/propeller-gcc-build
 else
-  BUILD?=$(realpath ..)/build-$(CROSS)
+  BUILD?=$(realpath ..)/propeller-gcc-$(CROSS)-build
   ifeq ($(CROSS),win32)
     CROSS_TARGET=i586-mingw32msvc
     CFGCROSS=--host=$(CROSS_TARGET)
@@ -93,6 +93,7 @@ SPINCMP=openspin$(EXT)
 $(warning OS $(OS) detected.)
 
 export PREFIX
+export BUILD
 export OS
 export SPINCMP
 export PATH:=$(PREFIX)/bin:$(PATH)
