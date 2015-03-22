@@ -124,7 +124,7 @@ CONFIG_OPTIONS=--with-pkgversion=$(PROPGCC_VERSION) --with-bugurl=$(BUGURL) $(CF
 .PHONY:	all
 
 #all:	binutils gcc lib-cog libgcc lib lib-tiny openspin spin2cpp loader gdb gdbstub spinsim libstdc++
-all:	binutils gcc lib-cog libgcc lib lib-tiny openspin spin2cpp loader
+all:	binutils gcc lib-cog libgcc lib lib-tiny openspin spin2cpp loader spinsim
 	@$(ECHO) Build complete.
 
 .NOTPARALLEL:
