@@ -16,3 +16,6 @@
 [submodule "spin2cpp"]
 	path = spin2cpp
 	url = https://github.com/totalspectrum/spin2cpp.git
+[submodule "spinsim"]
+	path = spinsim
+	url = https://github.com/dbetz/spinsim.git
