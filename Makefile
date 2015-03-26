@@ -15,6 +15,10 @@
 # binutils and gcc have to be built first
 #
 
+# set to gcc for gcc5 and gcc4 for gcc4 (from the original propgcc project)
+#GCC=GCC
+GCC=gcc4
+
 ROOT=$(shell pwd)
 CURSES=
 CURSES_PREFIX=$(HOME)
@@ -201,7 +205,7 @@ $(BUILD)/gcc/gcc-built:	$(BUILD)/gcc/gcc-configured
 
 $(BUILD)/gcc/gcc-configured:	$(BUILD)/gcc/gcc-created
 	@$(ECHO) Configuring gcc
-	@$(CD) $(BUILD)/gcc; $(ROOT)/gcc/configure --target=propeller-elf --prefix=$(PREFIX) --disable-nls --disable-shared $(CONFIG_OPTIONS)
+	@$(CD) $(BUILD)/gcc; $(ROOT)/$(GCC)/configure --target=propeller-elf --prefix=$(PREFIX) --disable-nls --disable-shared $(CONFIG_OPTIONS)
 	@$(TOUCH) $@
 
 #############
