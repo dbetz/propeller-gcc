@@ -7,6 +7,9 @@
 [submodule "gcc"]
 	path = gcc
 	url = https://github.com/totalspectrum/gcc-propeller
+[submodule "gcc4"]
+	path = gcc4
+	url = https://github.com/dbetz/propgcc-gcc.git
 [submodule "loader"]
 	path = loader
 	url = https://github.com/dbetz/propeller-load
@@ -19,6 +22,3 @@
 [submodule "spinsim"]
 	path = spinsim
 	url = https://github.com/parallaxinc/spinsim.git
-[submodule "gcc4"]
-	path = gcc4
-	url = https://github.com/dbetz/propgcc-gcc.git
