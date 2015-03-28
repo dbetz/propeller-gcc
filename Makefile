@@ -24,9 +24,9 @@ CURSES_PREFIX=$(HOME)
 ifeq ($(CROSS),)
   CFGCROSS=
   CROSSCC=gcc
-  BUILD?=$(realpath ..)/propeller-gcc-build
+  BUILD?=$(realpath ..)/propeller-$(GCCDIR)-build
 else
-  BUILD?=$(realpath ..)/propeller-gcc-$(CROSS)-build
+  BUILD?=$(realpath ..)/propeller-$(GCCDIR)-$(CROSS)-build
   ifeq ($(CROSS),win32)
     CROSS_TARGET=i586-mingw32msvc
     CFGCROSS=--host=$(CROSS_TARGET)
