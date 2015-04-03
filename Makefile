@@ -347,14 +347,11 @@ openspin:
 	@$(ECHO) Building openspin
 	@$(MAKE) -C openspin CC=$(CROSSCC) BUILD=$(BUILD)/openspin EXT=$(EXT)
 	@$(ECHO) Installing openspin
-	@$(CP) openspin/openspin$(EXT) $(PREFIX)/bin
-
-#	@$(CP) $(BUILD)/openspin/openspin$(EXT) $(PREFIX)/bin
+	@$(CP) $(BUILD)/openspin/openspin$(EXT) $(PREFIX)/bin
 
 .PHONY:	clean-openspin
 clean-openspin:
 	@$(RM) -rf $(BUILD)/openspin
-	@$(MAKE) -C openspin clean
 
 ############
 # SPIN2CPP #
@@ -370,7 +367,6 @@ spin2cpp:
 .PHONY:	clean-spin2cpp
 clean-spin2cpp:
 	@$(RM) -rf $(BUILD)/spin2cpp
-	@$(MAKE) -C spin2cpp clean
 
 ###########
 # SPINSIM #
@@ -386,7 +382,6 @@ spinsim:	$(BUILD)/spinsim/spinsim-created
 .PHONY:	clean-spinsim
 clean-spinsim:
 	@$(RM) -rf $(BUILD)/spinsim
-	@$(MAKE) -C spinsim clean
 
 ##########
 # LOADER #
