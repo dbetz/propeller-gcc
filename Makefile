@@ -347,7 +347,9 @@ openspin:
 	@$(ECHO) Building openspin
 	@$(MAKE) -C openspin CC=$(CROSSCC) BUILD=$(BUILD)/openspin EXT=$(EXT)
 	@$(ECHO) Installing openspin
-	@$(CP) $(BUILD)/openspin/openspin$(EXT) $(PREFIX)/bin
+	@$(CP) openspin/openspin$(EXT) $(PREFIX)/bin
+
+#	@$(CP) $(BUILD)/openspin/openspin$(EXT) $(PREFIX)/bin
 
 .PHONY:	clean-openspin
 clean-openspin:
