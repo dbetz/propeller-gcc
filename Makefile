@@ -99,7 +99,14 @@ export PREFIX
 export BUILD
 export OS
 export SPINCMP
-export PATH:=$(PREFIX)/bin:$(PATH)
+
+# if we're doing a native build, add the $(PREFIX)/bin directory to our path so we can use
+# the tools being built. Don't do that for cross builds because the tools we're building
+# are being built to run on a different target. In that case, we assume that the current
+# path contains the tools we need.
+ifeq ($(CROSS),)
+  export PATH:=$(PREFIX)/bin:$(PATH)
+endif
 
 #
 # note that the propgcc version string does not deal well with
@@ -124,10 +131,13 @@ export BUGURL
 #
 CONFIG_OPTIONS=--with-pkgversion=$(PROPGCC_VERSION) --with-bugurl=$(BUGURL) $(CFGCROSS)
 
-.PHONY:	all
+ifeq ($(GCCDIR),gcc4)
+  LIBSTDCPP:=libstdc++
+endif
 
+.PHONY:	all
 #all:	binutils gcc lib-cog libgcc lib lib-tiny openspin spin2cpp loader gdb gdbstub spinsim libstdc++
-all:	binutils gcc lib-cog libgcc lib lib-tiny openspin spin2cpp loader spinsim
+all:	binutils gcc lib-cog libgcc lib lib-tiny openspin spin2cpp loader spinsim $(LIBSTDCPP)
 	@$(ECHO) Build complete.
 
 .NOTPARALLEL:
@@ -335,9 +345,9 @@ $(BUILD)/lib/lib-tiny-built:	$(BUILD)/lib/lib-created
 .PHONY:	openspin
 openspin:
 	@$(ECHO) Building openspin
-	@$(MAKE) -C openspin CC=$(CROSSCC)
+	@$(MAKE) -C openspin CC=$(CROSSCC) BUILD=$(BUILD)/openspin EXT=$(EXT)
 	@$(ECHO) Installing openspin
-	@$(CP) openspin/openspin$(EXT) $(PREFIX)/bin
+	@$(CP) $(BUILD)/openspin/openspin$(EXT) $(PREFIX)/bin
 
 .PHONY:	clean-openspin
 clean-openspin:
@@ -351,9 +361,9 @@ clean-openspin:
 .PHONY:	spin2cpp
 spin2cpp:
 	@$(ECHO) Building spin2cpp
-	@$(MAKE) -C spin2cpp CC=$(CROSSCC) TARGET=$(PREFIX) BUILDROOT=$(BUILD)/spin2cpp
+	@$(MAKE) -C spin2cpp CC=$(CROSSCC) BUILD=$(BUILD)/spin2cpp EXT=$(EXT)
 	@$(ECHO) Installing spin2cpp
-	@$(CP) spin2cpp/spin2cpp$(EXT) $(PREFIX)/bin
+	@$(CP) $(BUILD)/spin2cpp/spin2cpp$(EXT) $(PREFIX)/bin
 
 .PHONY:	clean-spin2cpp
 clean-spin2cpp:
@@ -365,13 +375,11 @@ clean-spin2cpp:
 ###########
 
 .PHONY:	spinsim
-spinsim:	$(BUILD)/spinsim/spinsim-built
-
-$(BUILD)/spinsim/spinsim-built:	$(BUILD)/spinsim/spinsim-created
+spinsim:	$(BUILD)/spinsim/spinsim-created
 	@$(ECHO) Building spinsim
 	@$(MAKE) -C spinsim CC=$(CROSSCC) OS=$(OS) BUILD=$(BUILD)/spinsim EXT=$(EXT)
-	@$(CP) -f spinsim/spinsim$(EXT) $(PREFIX)/bin/
-	@$(TOUCH) $@
+	@$(ECHO) Installing spinsim
+	@$(CP) -f $(BUILD)/spinsim/spinsim$(EXT) $(PREFIX)/bin/
 
 .PHONY:	clean-spinsim
 clean-spinsim:
