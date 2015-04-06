@@ -132,12 +132,12 @@ export BUGURL
 CONFIG_OPTIONS=--with-pkgversion=$(PROPGCC_VERSION) --with-bugurl=$(BUGURL) $(CFGCROSS)
 
 ifeq ($(GCCDIR),gcc4)
-  LIBSTDCPP:=libstdc++
+  EXTRAS=libstdc++
 endif
 
 .PHONY:	all
 #all:	binutils gcc lib-cog libgcc lib lib-tiny openspin spin2cpp loader gdb gdbstub spinsim libstdc++
-all:	binutils gcc lib-cog libgcc lib lib-tiny openspin spin2cpp loader spinsim $(LIBSTDCPP)
+all:	binutils gcc lib-cog libgcc lib lib-tiny openspin spin2cpp loader spinsim $(EXTRAS)
 	@$(ECHO) Build complete.
 
 .NOTPARALLEL:
@@ -345,7 +345,7 @@ $(BUILD)/lib/lib-tiny-built:	$(BUILD)/lib/lib-created
 .PHONY:	openspin
 openspin:
 	@$(ECHO) Building openspin
-	@$(MAKE) -C openspin CC=$(CROSSCC) BUILD=$(BUILD)/openspin EXT=$(EXT)
+	@$(MAKE) -C openspin CROSS=$(CROSS) BUILD=$(BUILD)/openspin
 	@$(ECHO) Installing openspin
 	@$(CP) $(BUILD)/openspin/openspin$(EXT) $(PREFIX)/bin
 
@@ -360,7 +360,7 @@ clean-openspin:
 .PHONY:	spin2cpp
 spin2cpp:
 	@$(ECHO) Building spin2cpp
-	@$(MAKE) -C spin2cpp CC=$(CROSSCC) BUILD=$(BUILD)/spin2cpp EXT=$(EXT)
+	@$(MAKE) -C spin2cpp CROSS=$(CROSS) BUILD=$(BUILD)/spin2cpp
 	@$(ECHO) Installing spin2cpp
 	@$(CP) $(BUILD)/spin2cpp/spin2cpp$(EXT) $(PREFIX)/bin
 
@@ -375,7 +375,7 @@ clean-spin2cpp:
 .PHONY:	spinsim
 spinsim:	$(BUILD)/spinsim/spinsim-created
 	@$(ECHO) Building spinsim
-	@$(MAKE) -C spinsim CC=$(CROSSCC) OS=$(OS) BUILD=$(BUILD)/spinsim EXT=$(EXT)
+	@$(MAKE) -C spinsim CROSS=$(CROSS) OS=$(OS) BUILD=$(BUILD)/spinsim
 	@$(ECHO) Installing spinsim
 	@$(CP) -f $(BUILD)/spinsim/spinsim$(EXT) $(PREFIX)/bin/
 
