@@ -136,7 +136,6 @@ ifeq ($(GCCDIR),gcc4)
 endif
 
 .PHONY:	all
-#all:	binutils gcc lib-cog libgcc lib lib-tiny openspin spin2cpp loader gdb gdbstub spinsim libstdc++
 all:	binutils gcc lib-cog libgcc lib lib-tiny openspin spin2cpp loader spinsim $(EXTRAS)
 	@$(ECHO) Build complete.
 
@@ -153,10 +152,8 @@ help:
 	@$(ECHO) '  all - build all targets (default)'
 	@$(ECHO) '  binutils - build binutils'	
 	@$(ECHO) '  gcc - build gcc'	
-#	@$(ECHO) '  libstdc++ - build the C++ library'	
+	@$(ECHO) '  libstdc++ - build the C++ library'	
 	@$(ECHO) '  libgcc - build libgcc'	
-#	@$(ECHO) '  gdb - build gdb'	
-#	@$(ECHO) '  gdbstub - build gdbstub'	
 	@$(ECHO) '  lib - build the library'	
 	@$(ECHO) '  lib-cog - build the cog library'	
 	@$(ECHO) '  lib-tiny - build libtiny'	
@@ -164,15 +161,15 @@ help:
 	@$(ECHO) '  spin2cpp - build spin2cpp'	
 	@$(ECHO) '  spinsim - build spinsim'	
 	@$(ECHO) '  loader - build the loader'
-	@$(ECHO) '  install - install generated files to' $(INSTALL)	
+	@$(ECHO) '  install - install generated files to' $(INSTALL)
+	
 	@$(ECHO)
 	@$(ECHO) 'Cleaning targets:'
 	@$(ECHO) '  clean - remove the' $(BUILD) 'directory'
 	@$(ECHO) '  clean-all - remove the' $(BUILD) 'and' $(INSTALL) 'directories'
 	@$(ECHO) '  clean-binutils - prepare for a fresh rebuild of binutils'	
 	@$(ECHO) '  clean-gcc - prepare for a fresh rebuild of gcc, libgcc, libstdc++'	
-#	@$(ECHO) '  clean-gdb - prepare for a fresh rebuild of gdb'
-#	@$(ECHO) '  clean-gdbstub - prepare for a fresh rebuild of gdbstub'	
+	@$(ECHO) '  clean-loader - prepare for a fresh rebuild of the loader'	
 	@$(ECHO) '  clean-lib - prepare for a fresh rebuild of lib, lib-cog, lib-tiny'	
 	@$(ECHO) '  clean-openspin - prepare for a fresh rebuild of openspin'
 	@$(ECHO) '  clean-spin2cpp - prepare for a fresh rebuild of spin2cpp'	
@@ -245,25 +242,6 @@ $(BUILD)/gcc/libgcc-built: $(BUILD)/gcc/gcc-built
 	@$(MAKE) -C $(BUILD)/gcc install-target-libgcc
 	@$(TOUCH) $@
 
-#######
-# GDB #
-#######
-
-.PHONY:	gdb
-gdb:	lib $(CURSES) $(BUILD)/gdb/gdb-built
-
-$(BUILD)/gdb/gdb-built:	binutils gcc $(BUILD)/gdb/gdb-configured
-	@$(ECHO) Building gdb
-	@$(MAKE) -C $(BUILD)/gdb all
-	@$(ECHO) Installing gdb
-	@$(CP) -f $(BUILD)/gdb/gdb/gdb$(EXT) $(PREFIX)/bin/propeller-elf-gdb$(EXT)
-	@$(TOUCH) $@
-
-$(BUILD)/gdb/gdb-configured:	$(BUILD)/gdb/gdb-created
-	@$(ECHO) Configuring gdb
-	@$(CD) $(BUILD)/gdb; $(ROOT)/gdb/configure $(CFGCROSS) --target=propeller-elf --prefix=$(PREFIX) --with-system-gdbinit=$(PREFIX)/lib/gdb/gdbinit $(WITH_CURSES)
-	@$(TOUCH) $@
-
 ###########
 # NCURSES #
 ###########
@@ -280,22 +258,6 @@ $(BUILD)/ncurses/ncurses-built: $(BUILD)/ncurses/ncurses-configured
 $(BUILD)/ncurses/ncurses-configured: $(BUILD)/ncurses/ncurses-created
 	@$(ECHO) Configuring ncurses
 	@$(CD) $(BUILD)/ncurses; $(ROOT)/ncurses/configure --host=$(CROSS_TARGET) --prefix=$(CURSES_PREFIX)
-	@$(TOUCH) $@
-
-###########
-# GDBSTUB #
-###########
-
-.PHONY:	gdbstub
-gdbstub:	lib gdb $(BUILD)/gdbstub/gdbstub-built
-
-$(BUILD)/gdbstub/gdbstub-built:	$(BUILD)/gdbstub/gdbstub-created
-	@$(ECHO) Building gdbstub
-	@$(MAKE) -C gdbstub BUILDROOT=$(BUILD)/gdbstub CC=$(CROSSCC)
-	@$(ECHO) Installing gdbstub
-	@$(CP) -f $(BUILD)/gdbstub/gdbstub$(EXT) $(PREFIX)/bin/
-	@$(MKDIR) -p $(PREFIX)/lib/gdb
-	@$(CP) -f gdbstub/gdbinit.propeller $(PREFIX)/lib/gdb/gdbinit
 	@$(TOUCH) $@
 
 #######
@@ -412,8 +374,7 @@ install:
 #########
 
 .PHONY:	clean
-#clean:	clean-gdbstub clean-lib clean-loader clean-spin2cpp clean-spinsim
-clean:	clean-lib clean-loader
+clean:	clean-lib clean-loader clean-openspin clean-spin2cpp clean-spinsim
 	@$(ECHO) Removing $(BUILD)
 	@$(RM) -rf $(BUILD)
 
@@ -437,15 +398,6 @@ clean-binutils:
 .PHONY:	clean-gcc
 clean-gcc:
 	@$(RM) -rf $(BUILD)/gcc
-
-.PHONY:	clean-gdb
-clean-gdb:
-	@$(RM) -rf $(BUILD)/gdb
-
-.PHONY:	clean-gdbstub
-clean-gdbstub:
-	@$(RM) -rf $(BUILD)/gdbstub
-	@$(MAKE) -C gdbstub clean
 
 .PHONY:	clean-lib
 clean-lib:
