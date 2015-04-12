@@ -350,7 +350,7 @@ clean-spinsim:
 ##########
 
 .PHONY:	loader
-loader:	lib $(BUILD)/loader/loader-built
+loader:	lib $(BUILD)/loader/loader-built $(CURSES)
 
 $(BUILD)/loader/loader-built:	$(BUILD)/loader/loader-created
 	@$(ECHO) Building propeller-load

@@ -22,3 +22,6 @@
 [submodule "spinsim"]
 	path = spinsim
 	url = https://github.com/parallaxinc/spinsim.git
+[submodule "ncurses"]
+	path = ncurses
+	url = https://github.com/dbetz/propgcc-ncurses.git
