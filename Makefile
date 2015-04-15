@@ -181,7 +181,7 @@ help:
 ############
 
 .PHONY:	binutils
-binutils:	$(BUILD)/binutils/binutils-built
+binutils:	$(BUILD)/binutils/binutils-built $(CURSES)
 
 $(BUILD)/binutils/binutils-built:	$(BUILD)/binutils/binutils-configured
 	@$(ECHO) Building binutils
@@ -350,13 +350,13 @@ clean-spinsim:
 ##########
 
 .PHONY:	loader
-loader:	lib $(BUILD)/loader/loader-built $(CURSES)
+loader:	lib $(BUILD)/loader/loader-built
 
 $(BUILD)/loader/loader-built:	$(BUILD)/loader/loader-created
 	@$(ECHO) Building propeller-load
-	@$(MAKE) -C loader TARGET=$(PREFIX) BUILDROOT=$(BUILD)/loader TOOLCC=$(CROSSCC)
+	@$(MAKE) -C loader TARGET=$(PREFIX) BUILDROOT=$(BUILD)/loader TOOLCC=$(CROSSCC) CROSS=$(CROSS)
 	@$(ECHO) Installing propeller-load
-	@$(MAKE) -C loader TARGET=$(PREFIX) BUILDROOT=$(BUILD)/loader TOOLCC=$(CROSSCC) install
+	@$(MAKE) -C loader TARGET=$(PREFIX) BUILDROOT=$(BUILD)/loader TOOLCC=$(CROSSCC) CROSS=$(CROSS) install
 	@$(TOUCH) $@
 
 ###########
