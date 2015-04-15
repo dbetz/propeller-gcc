@@ -4,4 +4,6 @@ export CFLAGS="\
 -Wno-empty-body \
 -Wno-self-assign \
 -Wno-sometimes-uninitialized \
--Wno-uninitialized"
+-Wno-uninitialized \
+-Wno-unknown-warning-option \
+-Wno-unused-function"
