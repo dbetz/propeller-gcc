@@ -79,6 +79,7 @@ ifeq ($(UNAME),Darwin)
   OS?=macosx
   SRC_SPINCMP=openspin.osx
   EXT?=
+  BUFLAGS=--disable-gdb
 endif
 
 ifeq ($(UNAME),Msys)
@@ -192,7 +193,7 @@ $(BUILD)/binutils/binutils-built:	$(BUILD)/binutils/binutils-configured
 
 $(BUILD)/binutils/binutils-configured:	$(BUILD)/binutils/binutils-created
 	@$(ECHO) Configuring binutils
-	@$(CD) $(BUILD)/binutils; $(ROOT)/binutils/configure --target=propeller-elf --prefix=$(PREFIX) --disable-nls --disable-shared $(CONFIG_OPTIONS)
+	@$(CD) $(BUILD)/binutils; $(ROOT)/binutils/configure --target=propeller-elf --prefix=$(PREFIX) --disable-nls --disable-shared $(BUFLAGS) $(CONFIG_OPTIONS)
 	@$(TOUCH) $@
 
 #######
