@@ -17,6 +17,7 @@
 
 # set to "gcc" for gcc5 and "gcc4" for gcc4 (from the original propgcc project)
 GCCDIR?=gcc4
+#GCCDIR?=gcc
 
 ROOT=$(shell pwd)
 CURSES=
@@ -163,7 +164,7 @@ help:
 	@$(ECHO) '  spinsim - build spinsim'	
 	@$(ECHO) '  loader - build the loader'
 	@$(ECHO) '  install - install generated files to' $(INSTALL)
-	
+
 	@$(ECHO)
 	@$(ECHO) 'Cleaning targets:'
 	@$(ECHO) '  clean - remove the' $(BUILD) 'directory'
@@ -367,8 +368,8 @@ $(BUILD)/loader/loader-built:	$(BUILD)/loader/loader-created
 .PHONY:	install
 install:
 	@$(ECHO) Installing to $(INSTALL)
-	@$(RM) -rf $(INSTALL)
-	@$(CP) -r $(PREFIX) $(INSTALL)
+	@$(RM) -rf $(INSTALL)/*
+	@$(CP) -r $(PREFIX)/* $(INSTALL)
 
 #########
 # CLEAN #
