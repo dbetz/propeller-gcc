@@ -194,7 +194,7 @@ $(BUILD)/binutils/binutils-built:	$(BUILD)/binutils/binutils-configured
 
 $(BUILD)/binutils/binutils-configured:	$(BUILD)/binutils/binutils-created
 	@$(ECHO) Configuring binutils
-	@$(CD) $(BUILD)/binutils; $(ROOT)/binutils/configure --target=propeller-elf --prefix=$(PREFIX) --disable-nls --disable-shared $(BUFLAGS) $(CONFIG_OPTIONS)
+	@$(CD) $(BUILD)/binutils; $(ROOT)/binutils/configure --target=propeller-elf --prefix=$(PREFIX) --disable-nls --disable-shared $(BUFLAGS) $(CONFIG_OPTIONS) --with-expat --with-system-gdbinit=$(PREFIX)/lib/gdb/gdbinit
 	@$(TOUCH) $@
 
 #######
