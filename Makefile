@@ -16,8 +16,8 @@
 #
 
 # set to "gcc" for gcc5 and "gcc4" for gcc4 (from the original propgcc project)
-GCCDIR?=gcc4
-#GCCDIR?=gcc
+#GCCDIR?=gcc4
+GCCDIR?=gcc
 
 ROOT=$(shell pwd)
 CURSES=
