@@ -26,3 +26,7 @@ To install propeller-gcc into /opt/parallax:
 To install propeller-gcc to another location:
 
     INSTALL=/my/install/directory make install
+    
+To update all submodules to the latest commit in their home repositories:
+
+    git submodule foreach git pull origin master
