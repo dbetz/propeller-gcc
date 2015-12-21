@@ -1,5 +1,7 @@
+==============================================================
 # propeller-gcc
 A port of GCC to the Parallax Propeller
+==============================================================
 
 This project uses submodules so it requires a slightly different setup procedure:
 

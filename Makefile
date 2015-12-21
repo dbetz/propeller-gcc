@@ -34,6 +34,7 @@ else
     CROSSCC=$(CROSS_TARGET)-gcc
     OS=msys
     EXT=.exe
+    BUFLAGS=--disable-gdb
   else
     ifeq ($(CROSS),rpi)
       CROSS_TARGET=arm-linux-gnueabihf
