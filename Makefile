@@ -44,6 +44,7 @@ else
       CURSES=ncurses
       CURSES_PREFIX=$(HOME)/rpi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/arm-linux-gnueabihf/libc/usr
       CROSSCC=$(CROSS_TARGET)-gcc
+      BUFLAGS=--disable-gdb
     else
       echo "Unknown cross compilation selected"
     endif
