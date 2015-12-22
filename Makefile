@@ -29,7 +29,7 @@ ifeq ($(CROSS),)
 else
   BUILD?=$(realpath ..)/propeller-$(GCCDIR)-$(CROSS)-build
   ifeq ($(CROSS),win32)
-    CROSS_TARGET=i586-mingw32msvc
+    CROSS_TARGET=i686-w64-mingw32
     CFGCROSS=--host=$(CROSS_TARGET)
     CROSSCC=$(CROSS_TARGET)-gcc
     OS=msys
@@ -370,6 +370,7 @@ $(BUILD)/loader/loader-built:	$(BUILD)/loader/loader-created
 install:
 	@$(ECHO) Installing to $(INSTALL)
 	@$(RM) -rf $(INSTALL)/*
+	@$(MKDIR) $(INSTALL)
 	@$(CP) -r $(PREFIX)/* $(INSTALL)
 
 #########

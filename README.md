@@ -63,8 +63,8 @@ done by adding /opt/parallax/bin to your PATH environment variable.
 WINDOWS
 ==============================================================
 
-(1) Install the mingw32 toolchain for Ubuntu:
-    sudo apt-get install mingw32
+(1) Install the mingw-w64 toolchain for Ubuntu:
+    sudo apt-get install mingw-w64
 
 (2) Make the native propeller-gcc toolchain (if you haven't already) by doing:
     make
