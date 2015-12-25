@@ -135,9 +135,10 @@ export BUGURL
 #
 CONFIG_OPTIONS=--with-pkgversion=$(PROPGCC_VERSION) --with-bugurl=$(BUGURL) $(CFGCROSS)
 
-ifeq ($(GCCDIR),gcc4)
-  EXTRAS=libstdc++
-endif
+#ifeq ($(GCCDIR),gcc4)
+#  EXTRAS=libstdc++
+#endif
+EXTRAS=libstdc++
 
 .PHONY:	all
 all:	binutils gcc lib-cog libgcc lib lib-tiny openspin spin2cpp loader spinsim $(EXTRAS)
@@ -215,7 +216,7 @@ $(BUILD)/gcc/gcc-built:	$(BUILD)/gcc/gcc-configured
 
 $(BUILD)/gcc/gcc-configured:	$(BUILD)/gcc/gcc-created
 	@$(ECHO) Configuring gcc
-	@$(CD) $(BUILD)/gcc; $(ROOT)/$(GCCDIR)/configure --target=propeller-elf --prefix=$(PREFIX) --disable-nls --disable-shared $(CONFIG_OPTIONS)
+	@$(CD) $(BUILD)/gcc; $(ROOT)/$(GCCDIR)/configure --target=propeller-elf --prefix=$(PREFIX) --disable-nls --disable-shared --enable-languages=c,c++ $(CONFIG_OPTIONS)
 	@$(TOUCH) $@
 
 #############
