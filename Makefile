@@ -136,7 +136,10 @@ export BUGURL
 #
 CONFIG_OPTIONS=--with-pkgversion=$(PROPGCC_VERSION) --with-bugurl=$(BUGURL) $(CFGCROSS)
 
+# libstdc++ doesn't build correctly under GCCDIR=gcc currently
+ifeq ($(GCCDIR),gcc4)
 EXTRAS=libstdc++
+endif
 
 .PHONY:	all
 all:	binutils gcc lib-cog libgcc lib lib-tiny openspin spin2cpp loader spinsim $(EXTRAS)
