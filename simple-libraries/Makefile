@@ -1,3 +1,18 @@
+# Put this Makefile in "propsideworkspace/Learn/Simple Libraries" and type:
+#
+# "make" to build the CMM, LMM, and XMMC libraries.
+# "make lmm" to build the LMM libraries.
+# "make cmm" to build the CMM libraries.
+# "make xmmc" to build the XMMC libraries.
+#
+# "make clean" to clean the CMM, LMM, and XMM libraries.
+# "make clean-lmm" to clean the LMM library.
+# "make clean-cmm" to clean the CMM library.
+# "make clean-xmmc" to clean the XMMC library.
+#
+# Libraries are written to the 'lib' directory and all header files are copied to
+# the 'include' directory.
+
 CC=propeller-elf-gcc
 SPINC=openspin -q
 AR=propeller-elf-ar
@@ -31,10 +46,39 @@ CFLAGS=-m$(MMODEL) -Os $(INC) -m32bit-doubles -fno-exceptions -std=c99
 
 COGCFLAGS=-mcog -xc -Os $(INC) -m32bit-doubles
 
-all:	$(HDRDIR) $(OBJDIR) $(LIBDIR) includes $(LIBDIR)/libsimple-$(MMODEL).a
+all:	includes lmm cmm xmmc
+
+clean:	clean-includes clean-lmm clean-cmm clean-xmmc
+	@$(RMDIR) $(LIBDIR)
 
 includes:	$(HDRDIR)
 	@$(CP) $(HDRS) $(HDRDIR)
+
+clean-includes:
+	@$(RMDIR) $(HDRDIR)
+
+lmm:
+	$(MAKE) MMODEL=lmm model
+	
+clean-lmm:
+	$(MAKE) MMODEL=lmm clean-model
+	
+cmm:
+	$(MAKE) MMODEL=cmm model
+	
+clean-cmm:
+	$(MAKE) MMODEL=cmm clean-model
+	
+xmmc:
+	$(MAKE) MMODEL=xmmc model
+
+clean-xmmc:
+	$(MAKE) MMODEL=xmmc clean-model
+
+model:	$(HDRDIR) $(OBJDIR) $(LIBDIR) includes $(LIBDIR)/libsimple-$(MMODEL).a
+
+clean-model:
+	@$(RMDIR) $(OBJDIR) $(LIBDIR)/*.a
 
 OBJS=$(foreach file,$(CFILES),$(OBJDIR)/$(notdir $(patsubst %.c,%.o,$(file))))
 OBJS+=$(foreach file,$(COGCFILES),$(OBJDIR)/$(notdir $(patsubst %.cogc,%.cogc.o,$(file))))
@@ -72,6 +116,3 @@ $(OBJDIR)/%.o:	$(OBJDIR)/%.dat
 
 $(HDRDIR) $(OBJDIR) $(LIBDIR):
 	$(MKDIR) $@
-
-clean:
-	@$(RMDIR) $(OBJDIR) $(HDRDIR) $(LIBDIR)/*.a
