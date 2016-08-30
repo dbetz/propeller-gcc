@@ -15,9 +15,10 @@
 # binutils and gcc have to be built first
 #
 
-# set to "gcc" for gcc5 and "gcc4" for gcc4 (from the original propgcc project)
-#GCCDIR?=gcc4
-GCCDIR?=gcc
+# set to "gcc" for ersmith's gcc development repository currently containing gcc6
+# and "gcc4" for gcc4 (from the original propgcc project)
+GCCDIR?=gcc4
+#GCCDIR?=gcc
 
 ROOT=$(shell pwd)
 CURSES=
@@ -135,10 +136,10 @@ export BUGURL
 #
 CONFIG_OPTIONS=--with-pkgversion=$(PROPGCC_VERSION) --with-bugurl=$(BUGURL) $(CFGCROSS)
 
-#ifeq ($(GCCDIR),gcc4)
-#  EXTRAS=libstdc++
-#endif
+# libstdc++ doesn't build correctly under GCCDIR=gcc currently
+ifeq ($(GCCDIR),gcc4)
 EXTRAS=libstdc++
+endif
 
 .PHONY:	all
 all:	binutils gcc lib-cog libgcc lib lib-tiny openspin spin2cpp loader spinsim $(EXTRAS)
