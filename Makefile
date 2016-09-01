@@ -360,9 +360,9 @@ loader:	lib $(BUILD)/loader/loader-built
 
 $(BUILD)/loader/loader-built:	$(BUILD)/loader/loader-created
 	@$(ECHO) Building propeller-load
-	@$(MAKE) -C loader TARGET=$(PREFIX) BUILDROOT=$(BUILD)/loader TOOLCC=$(CROSSCC) CROSS=$(CROSS)
+	@$(MAKE) -C loader TARGET=$(PREFIX) BUILDROOT=$(BUILD)/loader CROSS=$(CROSS)
 	@$(ECHO) Installing propeller-load
-	@$(MAKE) -C loader TARGET=$(PREFIX) BUILDROOT=$(BUILD)/loader TOOLCC=$(CROSSCC) CROSS=$(CROSS) install
+	@$(MAKE) -C loader TARGET=$(PREFIX) BUILDROOT=$(BUILD)/loader CROSS=$(CROSS) install
 	@$(TOUCH) $@
 
 ###########
