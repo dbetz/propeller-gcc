@@ -16,8 +16,18 @@ have wget available on your machine.
 
     cd propeller-gcc/gcc
     ./contrib/download_prerequisites
+
+MacOS does not seem to come with wget so you will probably have to add an alias
+at the start of the download_prerequisits file:
+
+    alias wget="curl -O"
+
+Also, the Xcode compiler seems to be more picky than the compilers on other platforms
+so you will probably need to disable some warnings:
+
+    source fix_xcode_warnings.sh
     
-To build propeller-gcc (currently builds gcc5):
+To build propeller-gcc (currently builds gcc4):
 
     make
     
