@@ -25,7 +25,7 @@ at the start of the download_prerequisits file:
 Also, the Xcode compiler seems to be more picky than the compilers on other platforms
 so you will probably need to disable some warnings:
 
-    source fix_xcode_warnings.sh
+    source fix-xcode-warnings.sh
     
 To build propeller-gcc (currently builds gcc4):
 
