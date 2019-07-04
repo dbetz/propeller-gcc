@@ -6,4 +6,5 @@ export CFLAGS="\
 -Wno-sometimes-uninitialized \
 -Wno-uninitialized \
 -Wno-unknown-warning-option \
--Wno-unused-function"
+-Wno-unused-function \
+-Wno-null-pointer-arithmetic"
